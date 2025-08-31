@@ -1,7 +1,10 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Controller;
+
+use Cake\Log\Log;
 
 /**
  * Todos Controller
@@ -106,5 +109,17 @@ class TodosController extends AppController
         }
 
         return $this->redirect(['action' => 'index']);
+    }
+
+    // TODO: API TEST
+    public function test()
+    {
+        $data = ['id' => 1, 'name' => 'test'];
+
+        $this->response = $this->response
+            ->withType('application/json')
+            ->withStringBody(json_encode($data, JSON_UNESCAPED_UNICODE));
+
+        return $this->response;
     }
 }

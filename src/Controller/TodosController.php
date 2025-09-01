@@ -112,9 +112,9 @@ class TodosController extends AppController
     }
 
     // TODO: API TEST
-    public function test()
+    public function test($id)
     {
-        $data = ['id' => 1, 'name' => 'test'];
+        $data = ['id' => 1, 'name' => 'test', 'deviceId' => $id];
 
         $this->response = $this->response
             ->withType('application/json')

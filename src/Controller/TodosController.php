@@ -111,10 +111,29 @@ class TodosController extends AppController
         return $this->redirect(['action' => 'index']);
     }
 
-    // TODO: API TEST
-    public function test($id)
+    // TODO: 名前修正
+    public function todos()
     {
-        $data = ['id' => 1, 'name' => 'test', 'deviceId' => $id];
+        $data = [
+            [
+                'id' => 1,
+                'title' => 'test',
+                'content' => "eeeeee",
+                'done' => true,
+                'deviceId' => "33-33333-3",
+                'createdAt' => "2025/11/22"
+            ],
+            [
+                'id' => 2,
+                'title' => 'test2',
+                'deviceId' => "33-33333-3",
+                'content' => "eeeeee",
+                'done' => true,
+                'deviceId' => "33-33333-3",
+                'createdAt' => "2025/11/22"
+            ]
+
+        ];
 
         $this->response = $this->response
             ->withType('application/json')

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Model\Table;
@@ -74,7 +75,6 @@ class TodosTable extends Table
             ->notEmptyString('is_done');
 
         $validator
-            ->integer('device_id')
             ->notEmptyString('device_id');
 
         $validator

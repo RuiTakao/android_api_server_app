@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Model\Table;
@@ -45,16 +46,16 @@ class DevicesTable extends Table
         $this->setDisplayField('device_id');
         $this->setPrimaryKey('id');
 
-        $this->belongsTo('Devices', [
-            'foreignKey' => 'device_id',
-            'joinType' => 'INNER',
-        ]);
-        $this->hasMany('Devices', [
-            'foreignKey' => 'device_id',
-        ]);
-        $this->hasMany('Todos', [
-            'foreignKey' => 'device_id',
-        ]);
+        // $this->belongsTo('Devices', [
+        //     'foreignKey' => 'device_id',
+        //     'joinType' => 'INNER',
+        // ]);
+        // $this->hasMany('Devices', [
+        //     'foreignKey' => 'device_id',
+        // ]);
+        // $this->hasMany('Todos', [
+        //     'foreignKey' => 'device_id',
+        // ]);
     }
 
     /**
@@ -65,15 +66,15 @@ class DevicesTable extends Table
      */
     public function validationDefault(Validator $validator): Validator
     {
-        $validator
-            ->scalar('device_id')
-            ->maxLength('device_id', 50)
-            ->notEmptyString('device_id');
+        // $validator
+        //     ->scalar('device_id')
+        //     ->maxLength('device_id', 50)
+        //     ->notEmptyString('device_id');
 
-        $validator
-            ->dateTime('created_at')
-            ->requirePresence('created_at', 'create')
-            ->notEmptyDateTime('created_at');
+        // $validator
+        //     ->scalar('created_at')
+        //     ->maxLength('created_at', 50)
+        //     ->notEmptyString('created_at');
 
         return $validator;
     }
@@ -87,7 +88,7 @@ class DevicesTable extends Table
      */
     public function buildRules(RulesChecker $rules): RulesChecker
     {
-        $rules->add($rules->existsIn('device_id', 'Devices'), ['errorField' => 'device_id']);
+        // $rules->add($rules->existsIn('device_id', 'Devices'), ['errorField' => 'device_id']);
 
         return $rules;
     }

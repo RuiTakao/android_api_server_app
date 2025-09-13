@@ -14,131 +14,46 @@ use Cake\Log\Log;
  */
 class TodosController extends AppController
 {
-    /**
-     * Index method
-     *
-     * @return \Cake\Http\Response|null|void Renders view
-     */
-    public function index()
-    {
-        $this->paginate = [
-            'contain' => ['Devices'],
-        ];
-        $todos = $this->paginate($this->Todos);
-
-        $this->set(compact('todos'));
-    }
-
-    /**
-     * View method
-     *
-     * @param string|null $id Todo id.
-     * @return \Cake\Http\Response|null|void Renders view
-     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
-     */
-    public function view($id = null)
-    {
-        $todo = $this->Todos->get($id, [
-            'contain' => ['Devices'],
-        ]);
-
-        $this->set(compact('todo'));
-    }
-
-    /**
-     * Add method
-     *
-     * @return \Cake\Http\Response|null|void Redirects on successful add, renders view otherwise.
-     */
-    public function add()
-    {
-        $todo = $this->Todos->newEmptyEntity();
-        if ($this->request->is('post')) {
-            $todo = $this->Todos->patchEntity($todo, $this->request->getData());
-            if ($this->Todos->save($todo)) {
-                $this->Flash->success(__('The todo has been saved.'));
-
-                return $this->redirect(['action' => 'index']);
-            }
-            $this->Flash->error(__('The todo could not be saved. Please, try again.'));
-        }
-        $devices = $this->Todos->Devices->find('list', ['limit' => 200])->all();
-        $this->set(compact('todo', 'devices'));
-    }
-
-    /**
-     * Edit method
-     *
-     * @param string|null $id Todo id.
-     * @return \Cake\Http\Response|null|void Redirects on successful edit, renders view otherwise.
-     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
-     */
-    public function edit($id = null)
-    {
-        $todo = $this->Todos->get($id, [
-            'contain' => [],
-        ]);
-        if ($this->request->is(['patch', 'post', 'put'])) {
-            $todo = $this->Todos->patchEntity($todo, $this->request->getData());
-            if ($this->Todos->save($todo)) {
-                $this->Flash->success(__('The todo has been saved.'));
-
-                return $this->redirect(['action' => 'index']);
-            }
-            $this->Flash->error(__('The todo could not be saved. Please, try again.'));
-        }
-        $devices = $this->Todos->Devices->find('list', ['limit' => 200])->all();
-        $this->set(compact('todo', 'devices'));
-    }
-
-    /**
-     * Delete method
-     *
-     * @param string|null $id Todo id.
-     * @return \Cake\Http\Response|null|void Redirects to index.
-     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
-     */
-    public function delete($id = null)
-    {
-        $this->request->allowMethod(['post', 'delete']);
-        $todo = $this->Todos->get($id);
-        if ($this->Todos->delete($todo)) {
-            $this->Flash->success(__('The todo has been deleted.'));
-        } else {
-            $this->Flash->error(__('The todo could not be deleted. Please, try again.'));
-        }
-
-        return $this->redirect(['action' => 'index']);
-    }
-
     // TODO: 名前修正
     public function todos()
     {
-        $data = [
-            [
-                'id' => 1,
-                'title' => 'test',
-                'content' => "eeeeee",
-                'done' => true,
-                'deviceId' => "33-33333-3",
-                'createdAt' => "2025/11/22"
-            ],
-            [
-                'id' => 2,
-                'title' => 'test2',
-                'deviceId' => "33-33333-3",
-                'content' => "eeeeee",
-                'done' => true,
-                'deviceId' => "33-33333-3",
-                'createdAt' => "2025/11/22"
-            ]
-
-        ];
+        $data = $this->Todos->find()
+            ->select([
+                'id',
+                'title',
+                'content',
+                'done' => 'is_done',
+                'deviceId' => 'device_id',
+                'createdAt' => 'created_at'
+            ])
+            ->orderDesc("created_at");
 
         $this->response = $this->response
             ->withType('application/json')
             ->withStringBody(json_encode($data, JSON_UNESCAPED_UNICODE));
 
         return $this->response;
+    }
+
+    public function create()
+    {
+        $this->autoRender = false;
+
+        $this->request->allowMethod(['post', 'patch']);
+
+        $todo = $this->Todos->newEmptyEntity();
+        Log::debug(print_r($this->request->getData(), true));
+        $datas = [
+            'title' => $this->request->getData("title"),
+            'content' => $this->request->getData("content"),
+            'done' => false,
+            'device_id' => $this->request->getData("deviceId"),
+            'created_at' => $this->request->getData("createdAt"),
+            'updated_at' => $this->request->getData("createdAt")
+        ];
+        Log::debug(print_r($datas, true));
+        $todo = $this->Todos->patchEntity($todo, $datas);
+        $this->Todos->save($todo);
+        $todo->getErrors();
     }
 }

@@ -89,7 +89,8 @@ class Application extends BaseApplication
                     strtoupper($request->getMethod()) === 'POST'
                 ) &&
                 (
-                    $path === '/devices/post'
+                    $path === '/devices/post' ||
+                    $path === '/todos/create'
                 )
             );
         });

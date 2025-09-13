@@ -44,10 +44,10 @@ class TodosTable extends Table
         $this->setDisplayField('title');
         $this->setPrimaryKey('id');
 
-        $this->belongsTo('Devices', [
-            'foreignKey' => 'device_id',
-            'joinType' => 'INNER',
-        ]);
+        // $this->belongsTo('Devices', [
+        //     'foreignKey' => 'device_id',
+        //     'joinType' => 'INNER',
+        // ]);
     }
 
     /**
@@ -58,33 +58,33 @@ class TodosTable extends Table
      */
     public function validationDefault(Validator $validator): Validator
     {
-        $validator
-            ->scalar('title')
-            ->maxLength('title', 50)
-            ->requirePresence('title', 'create')
-            ->notEmptyString('title');
+        // $validator
+        //     ->scalar('title')
+        //     ->maxLength('title', 50)
+        //     ->requirePresence('title', 'create')
+        //     ->notEmptyString('title');
 
-        $validator
-            ->scalar('content')
-            ->maxLength('content', 255)
-            ->requirePresence('content', 'create')
-            ->notEmptyString('content');
+        // $validator
+        //     ->scalar('content')
+        //     ->maxLength('content', 255)
+        //     ->requirePresence('content', 'create')
+        //     ->notEmptyString('content');
 
-        $validator
-            ->boolean('is_done')
-            ->notEmptyString('is_done');
+        // $validator
+        //     ->boolean('is_done')
+        //     ->notEmptyString('is_done');
 
-        $validator
-            ->notEmptyString('device_id');
+        // $validator
+        //     ->notEmptyString('device_id');
 
-        $validator
-            ->dateTime('created_at')
-            ->requirePresence('created_at', 'create')
-            ->notEmptyDateTime('created_at');
+        // $validator
+        //     ->dateTime('created_at')
+        //     ->requirePresence('created_at', 'create')
+        //     ->notEmptyDateTime('created_at');
 
-        $validator
-            ->dateTime('updated_at')
-            ->allowEmptyDateTime('updated_at');
+        // $validator
+        //     ->dateTime('updated_at')
+        //     ->allowEmptyDateTime('updated_at');
 
         return $validator;
     }
@@ -98,7 +98,7 @@ class TodosTable extends Table
      */
     public function buildRules(RulesChecker $rules): RulesChecker
     {
-        $rules->add($rules->existsIn('device_id', 'Devices'), ['errorField' => 'device_id']);
+        // $rules->add($rules->existsIn('device_id', 'Devices'), ['errorField' => 'device_id']);
 
         return $rules;
     }

@@ -92,6 +92,7 @@ class Application extends BaseApplication
                 (
                     $path === '/devices/post' ||
                     $path === '/todos/create' ||
+                    preg_match('#^/todos/update/\d+$#', $path) ||
                     preg_match('#^/todos/updateDone/\d+$#', $path)
                 )
             );

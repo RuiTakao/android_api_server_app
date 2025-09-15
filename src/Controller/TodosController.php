@@ -90,4 +90,22 @@ class TodosController extends AppController
         $this->Todos->save($todo);
         $todo->getErrors();
     }
+
+    public function updateDone($id)
+    {
+        $this->autoRender = false;
+
+        $this->request->allowMethod(['put', 'patch']);
+
+        Log::debug(print_r($this->request->getData(), true));
+        $todo = $this->Todos->find()
+            ->where([
+                "id" => $id
+            ])
+            ->first();
+        $todo->set('is_done', $this->request->getData('done'));
+
+        Log::debug(print_r($todo, true));
+        $this->Todos->save($todo);
+    }
 }

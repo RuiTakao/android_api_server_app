@@ -14,9 +14,12 @@ use Cake\Log\Log;
  */
 class TodosController extends AppController
 {
-    // TODO: 名前修正
-    public function todos()
+
+    public function todoList()
     {
+        $device_id = $this->request->getQuery("deviceId");
+        Log::debug("TodosController [todoList] device_id : " . print_r($device_id, true));
+
         $data = $this->Todos->find()
             ->select([
                 'id',
@@ -26,7 +29,11 @@ class TodosController extends AppController
                 'deviceId' => 'device_id',
                 'createdAt' => 'created_at'
             ])
+            ->where(["device_id" => $device_id])
             ->orderDesc("created_at");
+
+        Log::debug("TodosController [todoList] data : " . print_r($data, true));
+        Log::debug("TodosController [todoList] data : " . print_r(json_encode($data, JSON_UNESCAPED_UNICODE), true));
 
         $this->response = $this->response
             ->withType('application/json')
@@ -38,6 +45,7 @@ class TodosController extends AppController
     public function todo($id)
     {
         Log::debug(print_r($id, true));
+        Log::debug(print_r($this->request->getQuery("deviceId"), true));
 
         $data = $this->Todos->find()
             ->select([
@@ -48,11 +56,11 @@ class TodosController extends AppController
                 'deviceId' => 'device_id',
                 'createdAt' => 'created_at'
             ])
-            ->where(["id" => $id])
+            ->where([
+                "id" => $id,
+                "device_id" => $this->request->getQuery("deviceId")
+            ])
             ->first();
-
-        // Log::debug(print_r($data[1], true));
-        // $data = $data;
 
         $this->response = $this->response
             ->withType('application/json')
@@ -69,16 +77,16 @@ class TodosController extends AppController
 
         $todo = $this->Todos->newEmptyEntity();
         Log::debug(print_r($this->request->getData(), true));
-        $datas = [
-            'title' => $this->request->getData("title"),
-            'content' => $this->request->getData("content"),
+        $data = [
+            'title' => $this->request->getData("todo.title"),
+            'content' => $this->request->getData("todo.content"),
             'done' => false,
             'device_id' => $this->request->getData("deviceId"),
-            'created_at' => $this->request->getData("createdAt"),
-            'updated_at' => $this->request->getData("createdAt")
+            'created_at' => $this->request->getData("todo.createdAt"),
+            'updated_at' => $this->request->getData("todo.createdAt")
         ];
-        Log::debug(print_r($datas, true));
-        $todo = $this->Todos->patchEntity($todo, $datas);
+        Log::debug(print_r($data, true));
+        $todo = $this->Todos->patchEntity($todo, $data);
         $this->Todos->save($todo);
         $todo->getErrors();
     }

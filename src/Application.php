@@ -87,12 +87,14 @@ class Application extends BaseApplication
             return (
                 (
                     strtoupper($request->getMethod()) === 'POST' ||
-                    strtoupper($request->getMethod()) === 'PUT'
+                    strtoupper($request->getMethod()) === 'PUT' ||
+                    strtoupper($request->getMethod()) === 'DELETE'
                 ) &&
                 (
                     $path === '/devices/post' ||
                     $path === '/todos/create' ||
                     preg_match('#^/todos/update/\d+$#', $path) ||
+                    preg_match('#^/todos/delete/\d+$#', $path) ||
                     preg_match('#^/todos/updateDone/\d+$#', $path)
                 )
             );

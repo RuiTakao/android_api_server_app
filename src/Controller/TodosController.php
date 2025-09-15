@@ -112,6 +112,23 @@ class TodosController extends AppController
         $this->Todos->save($todo);
     }
 
+    public function delete($id)
+    {
+        $this->autoRender = false;
+
+        $this->request->allowMethod(['delete']);
+
+        Log::debug(print_r($this->request->getQuery(), true));
+
+        $todo = $this->Todos->find()
+            ->where([
+                "id" => $id
+            ])
+            ->first();
+        Log::debug(print_r($todo, true));
+        $this->Todos->delete($todo);
+    }
+
     public function updateDone($id)
     {
         $this->autoRender = false;

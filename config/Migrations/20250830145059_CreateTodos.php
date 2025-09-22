@@ -6,13 +6,6 @@ use Migrations\AbstractMigration;
 
 class CreateTodos extends AbstractMigration
 {
-    /**
-     * Change Method.
-     *
-     * More information on this method is available here:
-     * https://book.cakephp.org/phinx/0/en/migrations.html#the-change-method
-     * @return void
-     */
     public function change(): void
     {
         $table = $this->table('todos', [
@@ -33,14 +26,19 @@ class CreateTodos extends AbstractMigration
             'comment' => '完了時のチェックフラグ',
 
         ]);
-        $table->addColumn('device_id', 'integer', [
+        $table->addColumn('device_id', 'string', [
             'limit' => 50,
             'comment' => '端末ID',
         ]);
-        $table->addColumn('created_at', 'datetime');
-        $table->addColumn('updated_at', 'datetime', [
+        $table->addColumn('created_at', 'string', [
+            'limit' => 50,
+            'comment' => '作成日',
+        ]);
+        $table->addColumn('updated_at', 'string', [
+            'limit' => 50,
             'default' => null,
             'null' => true,
+            'comment' => '作成日',
         ]);
         $table->create();
     }

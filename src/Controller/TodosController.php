@@ -78,12 +78,12 @@ class TodosController extends AppController
         $todo = $this->Todos->newEmptyEntity();
         Log::debug(print_r($this->request->getData(), true));
         $data = [
-            'title' => $this->request->getData("todo.title"),
-            'content' => $this->request->getData("todo.content"),
+            'title' => $this->request->getData("title"),
+            'content' => $this->request->getData("content"),
             'done' => false,
             'device_id' => $this->request->getData("deviceId"),
-            'created_at' => $this->request->getData("todo.createdAt"),
-            'updated_at' => $this->request->getData("todo.createdAt")
+            'created_at' => $this->request->getData("createdAt"),
+            'updated_at' => $this->request->getData("createdAt")
         ];
         Log::debug(print_r($data, true));
         $todo = $this->Todos->patchEntity($todo, $data);

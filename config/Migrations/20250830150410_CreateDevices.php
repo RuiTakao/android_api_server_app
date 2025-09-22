@@ -6,13 +6,6 @@ use Migrations\AbstractMigration;
 
 class CreateDevices extends AbstractMigration
 {
-    /**
-     * Change Method.
-     *
-     * More information on this method is available here:
-     * https://book.cakephp.org/phinx/0/en/migrations.html#the-change-method
-     * @return void
-     */
     public function change(): void
     {
         $table = $this->table('devices', [
@@ -22,7 +15,10 @@ class CreateDevices extends AbstractMigration
             'limit' => 50,
             'comment' => '端末ID',
         ]);
-        $table->addColumn('created_at', 'datetime');
+        $table->addColumn('created_at', 'string', [
+            'limit' => 50,
+            'comment' => '作成日',
+        ]);
         $table->create();
     }
 }

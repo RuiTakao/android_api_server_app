@@ -117,6 +117,7 @@ class DevicesController extends AppController
         $device = $this->Devices->newEmptyEntity();
         $data = [
             'device_id' => $this->request->getData('deviceId'),
+            'device_name' => $this->request->getData('deviceName'),
             'created_at' => date('Y/m/d H:i:s'),
         ];
 

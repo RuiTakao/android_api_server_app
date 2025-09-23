@@ -15,6 +15,10 @@ class CreateDevices extends AbstractMigration
             'limit' => 50,
             'comment' => '端末ID',
         ]);
+        $table->addColumn('device_name', 'string', [
+            'limit' => 50,
+            'comment' => '端末名',
+        ]);
         $table->addColumn('created_at', 'string', [
             'limit' => 50,
             'comment' => '作成日',

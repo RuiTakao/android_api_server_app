@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Model\Entity;
@@ -28,6 +29,7 @@ class Device extends Entity
      */
     protected $_accessible = [
         'device_id' => true,
+        'device_name' => true,
         'created_at' => true,
         'devices' => true,
         'todos' => true,

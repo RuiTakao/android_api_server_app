@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Model\Entity;
@@ -31,7 +32,7 @@ class Todo extends Entity
      */
     protected $_accessible = [
         'title' => true,
-        'content' => true,
+        'memo' => true,
         'is_done' => true,
         'device_id' => true,
         'created_at' => true,

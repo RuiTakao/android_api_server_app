@@ -24,7 +24,7 @@ class TodosController extends AppController
             ->select([
                 'id',
                 'title',
-                'content',
+                'memo',
                 'done' => 'is_done',
                 'deviceId' => 'device_id',
                 'createdAt' => 'created_at'
@@ -51,7 +51,7 @@ class TodosController extends AppController
             ->select([
                 'id',
                 'title',
-                'content',
+                'memo',
                 'done' => 'is_done',
                 'deviceId' => 'device_id',
                 'createdAt' => 'created_at'
@@ -79,7 +79,7 @@ class TodosController extends AppController
         Log::debug(print_r($this->request->getData(), true));
         $data = [
             'title' => $this->request->getData("title"),
-            'content' => $this->request->getData("content"),
+            'memo' => $this->request->getData("memo"),
             'done' => false,
             'device_id' => $this->request->getData("deviceId"),
             'created_at' => $this->request->getData("createdAt"),
@@ -106,7 +106,7 @@ class TodosController extends AppController
             ])
             ->first();
         $todo->set('title', $this->request->getData('title'));
-        $todo->set('content', $this->request->getData('content'));
+        $todo->set('memo', $this->request->getData('memo'));
         $todo->set('updated_at', $this->request->getData('updatedAt'));
         Log::debug(print_r($todo, true));
         $this->Todos->save($todo);

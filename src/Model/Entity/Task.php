@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 
 namespace App\Model\Entity;
@@ -7,19 +6,20 @@ namespace App\Model\Entity;
 use Cake\ORM\Entity;
 
 /**
- * Todo Entity
+ * Task Entity
  *
  * @property int $id
  * @property string $title
- * @property string $content
- * @property bool $is_done
+ * @property string $comment
+ * @property float $progress_percent
+ * @property \Cake\I18n\FrozenTime|null $target_date
  * @property int $device_id
  * @property \Cake\I18n\FrozenTime $created_at
- * @property \Cake\I18n\FrozenTime|null $updated_at
+ * @property \Cake\I18n\FrozenTime $updated_at
  *
  * @property \App\Model\Entity\Device $device
  */
-class Todo extends Entity
+class Task extends Entity
 {
     /**
      * Fields that can be mass assigned using newEntity() or patchEntity().
@@ -32,8 +32,9 @@ class Todo extends Entity
      */
     protected $_accessible = [
         'title' => true,
-        'memo' => true,
-        'is_done' => true,
+        'comment' => true,
+        'progress_percent' => true,
+        'target_date' => true,
         'device_id' => true,
         'created_at' => true,
         'updated_at' => true,

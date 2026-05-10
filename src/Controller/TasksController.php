@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use Cake\Log\Log;
+
 /**
  * Tasks Controller
  *
@@ -21,6 +23,14 @@ class TasksController extends AppController
             ->withStringBody(json_encode($data, JSON_UNESCAPED_UNICODE));
 
         return $this->response;
+    }
+
+    public function createTask() {
+        $this->autoRender = false;
+
+        $this->request->allowMethod(['post', 'patch']);
+
+        Log::debug(print_r($this->request->getData(), true));
     }
 
     /**

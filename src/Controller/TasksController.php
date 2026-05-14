@@ -25,6 +25,16 @@ class TasksController extends AppController
         return $this->response;
     }
 
+    public function getTask() {
+        $data = ["id" => 1, "title" => "Api学習"];
+        // $data = [];
+        $this->response = $this->response
+            ->withType('application/json')
+            ->withStringBody(json_encode($data, JSON_UNESCAPED_UNICODE));
+
+        return $this->response;
+    }
+
     public function createTask() {
         $this->autoRender = false;
 

@@ -17,7 +17,13 @@ class TasksController extends AppController
     public function getTaskList() 
     {
         $data = [["id" => 1, "title" => "Api学習"], ["id" => 3, "title" => "Room学習"]];
-        // $data = [];
+        $data = $this->Tasks->find()
+            ->select([
+                'id',
+                'title'
+            ]);
+
+        Log::debug("TodosController [todoList] data : " . print_r($data, true));
         $this->response = $this->response
             ->withType('application/json')
             ->withStringBody(json_encode($data, JSON_UNESCAPED_UNICODE));
@@ -25,9 +31,17 @@ class TasksController extends AppController
         return $this->response;
     }
 
-    public function getTask() {
+    public function getTask($id) {
         $data = ["id" => 1, "title" => "Api学習"];
-        // $data = [];
+         $data = $this->Tasks->find()
+            ->select([
+                'id',
+                'title'
+            ])->where([
+                "id" => $id
+            ])
+            ->first();
+
         $this->response = $this->response
             ->withType('application/json')
             ->withStringBody(json_encode($data, JSON_UNESCAPED_UNICODE));
@@ -40,7 +54,50 @@ class TasksController extends AppController
 
         $this->request->allowMethod(['post', 'patch']);
 
+        $task = $this->Tasks->newEmptyEntity();
+        $data = [
+            "title" => $this->request->getData("title"),
+            "comment" => "dd",
+            "created_at" => "d",
+            "device_id" => 1
+        ];
+        $task = $this->Tasks->patchEntity($task, $data);
+        $this->Tasks->save($task);
+
         Log::debug(print_r($this->request->getData(), true));
+        Log::debug(print_r($task->getErrors(), true));
+    }
+
+    public function updateTask($id) {
+        $this->autoRender = false;
+
+        $this->request->allowMethod(['put', 'patch']);
+
+        $task = $this->Tasks->find()
+            ->where([
+                "id" => $id
+            ])
+            ->first();
+        $task->set('title', $this->request->getData('title'));
+        $this->Tasks->save($task);
+
+        Log::debug(print_r($this->request->getData(), true));
+    }
+
+    public function deleteTask($id) {
+        $this->autoRender = false;
+
+        $this->request->allowMethod(['delete']);
+
+        Log::debug(print_r($this->request->getData(), true));
+
+        $task = $this->Tasks->find()
+            ->where([
+                "id" => $id
+            ])
+            ->first();
+        Log::debug(print_r($task, true));
+        $this->Tasks->delete($task);
     }
 
     /**

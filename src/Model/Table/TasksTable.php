@@ -81,16 +81,6 @@ class TasksTable extends Table
             ->integer('device_id')
             ->notEmptyString('device_id');
 
-        $validator
-            ->dateTime('created_at')
-            ->requirePresence('created_at', 'create')
-            ->notEmptyDateTime('created_at');
-
-        $validator
-            ->dateTime('updated_at')
-            ->requirePresence('updated_at', 'create')
-            ->notEmptyDateTime('updated_at');
-
         return $validator;
     }
 

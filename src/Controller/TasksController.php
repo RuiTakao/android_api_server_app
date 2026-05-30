@@ -16,11 +16,12 @@ class TasksController extends AppController
 
     public function getTaskList() 
     {
-        $data = [["id" => 1, "title" => "Api学習"], ["id" => 3, "title" => "Room学習"]];
+        $data = [["id" => 1, "title" => "Api学習", "progressPercent" => 0.4], ["id" => 3, "title" => "Room学習", "progressPercent" => 0.4]];
         $data = $this->Tasks->find()
             ->select([
                 'id',
-                'title'
+                'title',
+                'progress_percent'
             ]);
 
         Log::debug("TodosController [todoList] data : " . print_r($data, true));
